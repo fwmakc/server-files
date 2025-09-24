@@ -1,15 +1,15 @@
 import { FilesInterface } from '../interfaces/files.interface';
 
 export function allowTypes(file: FilesInterface) {
-  let types = process.env.UPLOADS_ALLOW_TYPES || '';
+  const types = process.env.UPLOADS_ALLOW_TYPES || '';
 
   if (!types) {
     return true;
   }
 
-  if (Array.isArray(types)) {
-    types = types.join(';');
-  }
+  // if (Array.isArray(typesArray)) {
+  //   types = types.join(';');
+  // }
 
   const mimetype = file.mimetype.split('/');
 

@@ -1,10 +1,10 @@
 import { FilesInterface } from '../interfaces/files.interface';
 import { OptionsFilesDto } from '../dto/options.files.dto';
-import { imageResize } from '../helpers/image_resize.helper';
-import { getImageMetadata } from '../helpers/get_image_metadata.helper';
-import { imageConvert } from '../helpers/image_convert.helper';
+import { imageResize } from './image_resize.helper';
+import { getImageMetadata } from './get_image_metadata.helper';
+import { imageConvert } from './image_convert.helper';
 
-export async function imageProcessService(
+export async function imageProcess(
   file: FilesInterface,
   options: OptionsFilesDto,
 ): Promise<FilesInterface> {

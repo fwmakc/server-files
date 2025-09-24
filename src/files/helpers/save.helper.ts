@@ -8,7 +8,7 @@ export async function save(file: FilesInterface, options: OptionsFilesDto) {
   let { folder } = options;
   const { replace } = options;
 
-  folder = `${folder || ''}`.replace(/[^\w\d\/]/gu, '');
+  folder = `${folder || ''}`.replace(/[^\w\d/]/gu, '');
   const uploadFolder = join(process.env.UPLOADS_PATH || '', folder);
 
   try {

@@ -1,30 +1,52 @@
 import { OptionsFilesDto } from '../dto/options.files.dto';
 import { FilesInterface } from '../interfaces/files.interface';
+import { decode } from '../helpers/decode.helper';
+import { fileProcess } from '../helpers/file_process.helper';
 import { save } from '../helpers/save.helper';
-import { fileProcessService } from './file_process.service';
 
 export async function processService(
   files: Express.Multer.File[],
   options: OptionsFilesDto,
-) {
+): Promise<FilesInterface[]> {
   const filesList: FilesInterface[] = [];
 
   for (const item of files) {
-    let file = new FilesInterface(item);
-    file = await fileProcessService(file, options);
+    const fileObject = new FilesInterface(item);
+    const fileDecoded = decode(fileObject);
+    const file = await fileProcess(fileDecoded, options);
+
+    if (!file) {
+      const newFile = new FilesInterface({
+        buffer: Buffer.from([]),
+        mimetype: fileDecoded.mimetype,
+        originalname: fileDecoded.originalname,
+      });
+
+      newFile.error = 'Not allow type';
+
+      filesList.push(newFile);
+
+      continue;
+    }
 
     const { error, url } = await save(file, options);
-    const { buffer, mimetype, originalname, size, timestamp } = file;
+    const { mimetype, originalname, size, timestamp } = file;
 
     const newFile = new FilesInterface({
-      buffer,
-      error,
+      buffer: Buffer.from([]),
       mimetype,
       originalname,
       size,
       timestamp,
-      url,
     });
+
+    if (error) {
+      newFile.error = error;
+    }
+
+    if (url) {
+      newFile.url = url;
+    }
 
     filesList.push(newFile);
   }
