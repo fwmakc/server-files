@@ -5,7 +5,7 @@ import {
   UploadedFiles,
 } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
-import { Data } from '../common/common.decorator';
+import { Data, Secure } from '../common/common.decorator';
 import { FilesService } from './files.service';
 import { OptionsFilesDto } from './dto/options.files.dto';
 import { FilesInterface } from './interfaces/files.interface';
@@ -14,6 +14,7 @@ import { FilesInterface } from './interfaces/files.interface';
 export class FilesController {
   constructor(private readonly filesService: FilesService) {}
 
+  @Secure()
   @Post('upload')
   @UseInterceptors(FilesInterceptor('file'))
   async filesUploadImage(
