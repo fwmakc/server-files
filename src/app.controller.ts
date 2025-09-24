@@ -40,7 +40,6 @@ export class AppController {
       dir: join(__dirname),
       prefix: this.configService.get<string>('PREFIX'),
       uploadsPath: this.configService.get<string>('UPLOADS_PATH'),
-      uploadsUrl: this.configService.get<string>('UPLOADS_URL'),
       uploadsAllowTypes: this.configService.get<string>('UPLOADS_ALLOW_TYPES'),
       uploadsMaxSize: this.configService.get<string>('UPLOADS_MAX_SIZE'),
       uploadsImageMaxWidth: this.configService.get<string>(

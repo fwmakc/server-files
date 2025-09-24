@@ -61,7 +61,9 @@ async function bootstrap() {
     }),
   );
 
-  app.useStaticAssets(join(process.env.UPLOADS_PATH || './uploads'));
+  app.useStaticAssets(join(process.env.UPLOADS_PATH || ''), {
+    prefix: process.env.PREFIX || '',
+  });
 
   const port = process.env.PORT || 5000;
   const ip = process.env.IP || 'localhost';

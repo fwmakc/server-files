@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 import { FilesController } from './files.controller';
 import { FilesService } from './files.service';
 
@@ -7,8 +8,8 @@ import { FilesService } from './files.service';
   controllers: [FilesController],
   imports: [
     ServeStaticModule.forRoot({
-      rootPath: process.env.UPLOADS_PATH,
-      serveRoot: process.env.UPLOADS_PATH,
+      rootPath: join(process.env.UPLOADS_PATH || ''),
+      serveRoot: join(process.env.UPLOADS_PATH || ''),
     }),
   ],
   providers: [FilesService],

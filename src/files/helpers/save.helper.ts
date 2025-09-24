@@ -10,7 +10,7 @@ export async function save(file: FilesInterface, options: OptionsFilesDto) {
   const userFolder = `${folder || ''}`.replace(/[^\w\d/]/gu, '');
   const uploadFolder = join(process.env.UPLOADS_PATH || '', userFolder);
 
-  const url = `${process.env.UPLOADS_URL}/${userFolder ? `${userFolder}/` : ''}${
+  const url = `${process.env.PREFIX}/${userFolder ? `${userFolder}/` : ''}${
     file.originalname
   }`;
 
