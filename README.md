@@ -156,6 +156,16 @@ MD5(SECURE_SECRET + '.' + CURRENT_TIMESTAMP) + '.' + CURRENT_TIMESTAMP
 
 Если вам нужно использовать методы без защиты, просто удалите или закомментируйте декоратор **Secure**.
 
+## Открыть файл
+
+```
+curl --request GET \
+  --url http://localhost:5000/1abf8f72-fe2d-4075-b543-7cb2cab2cae7.webp \
+  --cookie id=1
+```
+
+[^ к оглавлению](#оглавление)
+
 ## Загрузка одного файла
 
 ```
