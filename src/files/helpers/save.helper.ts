@@ -5,11 +5,14 @@ import { FilesInterface } from '../interfaces/files.interface';
 import { OptionsFilesDto } from '../dto/options.files.dto';
 
 export async function save(file: FilesInterface, options: OptionsFilesDto) {
-  let { folder } = options;
-  const { replace } = options;
+  const { folder, replace } = options;
 
-  folder = `${folder || ''}`.replace(/[^\w\d/]/gu, '');
-  const uploadFolder = join(process.env.UPLOADS_PATH || '', folder);
+  const userFolder = `${folder || ''}`.replace(/[^\w\d/]/gu, '');
+  const uploadFolder = join(process.env.UPLOADS_PATH || '', userFolder);
+
+  const url = `${process.env.UPLOADS_URL}/${userFolder ? `${userFolder}/` : ''}${
+    file.originalname
+  }`;
 
   try {
     await access(uploadFolder);
@@ -20,6 +23,7 @@ export async function save(file: FilesInterface, options: OptionsFilesDto) {
   if (!file) {
     return {
       error: 'Файл не задан',
+      url,
     };
   }
 
@@ -28,6 +32,7 @@ export async function save(file: FilesInterface, options: OptionsFilesDto) {
   if (!replace && existsSync(filePath)) {
     return {
       error: 'Файл уже существует',
+      url,
     };
   }
 
@@ -36,12 +41,11 @@ export async function save(file: FilesInterface, options: OptionsFilesDto) {
   } catch (e) {
     return {
       error: 'Ошибка при записи файла',
+      url,
     };
   }
 
   return {
-    url: `${process.env.UPLOADS_URL}/${folder ? `${folder}/` : ''}${
-      file.originalname
-    }`,
+    url,
   };
 }
