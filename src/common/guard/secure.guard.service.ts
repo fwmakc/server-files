@@ -1,8 +1,5 @@
 import { UnauthorizedException } from '@nestjs/common';
-import dotenv from 'dotenv';
 import { md5 } from 'lib-hash';
-
-dotenv.config();
 
 export function tokenValidate(token: string): boolean {
   if (!token) {
