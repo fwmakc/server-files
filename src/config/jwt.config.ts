@@ -1,8 +1,5 @@
-import { ConfigService } from '@nestjs/config';
 import { JwtModuleOptions } from '@nestjs/jwt';
 
-export const getJwtConfig = (
-  ConfigService: ConfigService,
-): JwtModuleOptions => ({
-  secret: ConfigService.get('JWT_SECRET'),
+export const getJwtConfig = (): JwtModuleOptions => ({
+  secret: process.env.JWT_SECRET,
 });

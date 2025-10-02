@@ -1,15 +1,11 @@
 import { Controller, Get, Header } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { AppService } from './app.service';
 import { join } from 'path';
 import { Secure, SimpleSecure } from './common/common.decorator';
 
 @Controller()
 export class AppController {
-  constructor(
-    private readonly appService: AppService,
-    private readonly configService: ConfigService,
-  ) {}
+  constructor(private readonly appService: AppService) {}
 
   @Get()
   @Header('Content-Type', 'application/json')
@@ -38,16 +34,12 @@ export class AppController {
       status: 'ok',
       secure: 'simple',
       dir: join(__dirname),
-      prefix: this.configService.get<string>('PREFIX'),
-      uploadsPath: this.configService.get<string>('UPLOADS_PATH'),
-      uploadsAllowTypes: this.configService.get<string>('UPLOADS_ALLOW_TYPES'),
-      uploadsMaxSize: this.configService.get<string>('UPLOADS_MAX_SIZE'),
-      uploadsImageMaxWidth: this.configService.get<string>(
-        'UPLOADS_IMAGE_MAX_WIDTH',
-      ),
-      uploadsImageMaxHeight: this.configService.get<string>(
-        'UPLOADS_IMAGE_MAX_HEIGHT',
-      ),
+      prefix: process.env.PREFIX,
+      uploadsPath: process.env.UPLOADS_PATH,
+      uploadsAllowTypes: process.env.UPLOADS_ALLOW_TYPES,
+      uploadsMaxSize: process.env.UPLOADS_MAX_SIZE,
+      uploadsImageMaxWidth: process.env.UPLOADS_IMAGE_MAX_WIDTH,
+      uploadsImageMaxHeight: process.env.UPLOADS_IMAGE_MAX_HEIGHT,
     });
   }
 }
