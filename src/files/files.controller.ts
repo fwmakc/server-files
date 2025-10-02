@@ -38,8 +38,6 @@ export class FilesController {
       filename,
     );
 
-    console.log('-- filePath', filePath);
-
     if (!fs.existsSync(filePath)) {
       return res.status(404).send('File not found');
     }
