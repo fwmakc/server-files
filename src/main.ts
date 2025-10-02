@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import { join } from 'path';
+// import { join } from 'path';
 import { AppModule } from './app.module';
 import cookieParser from 'cookie-parser';
 import fileStore from 'session-file-store';
@@ -61,9 +61,9 @@ async function bootstrap() {
     }),
   );
 
-  app.useStaticAssets(join(process.env.UPLOADS_PATH || ''), {
-    prefix: process.env.PREFIX || '',
-  });
+  // app.useStaticAssets(join(process.env.UPLOADS_PATH || ''), {
+  //   prefix: process.env.PREFIX || '',
+  // });
 
   const port = process.env.PORT || 5000;
   const ip = process.env.IP || 'localhost';
